@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  </head>    
+  <body>
+<!-- component -->
+<section class="antialiased bg-gray-100 text-gray-600 h-screen px-4" x-data="app">
+  <div class="flex flex-col justify-center h-full">
+      <!-- Table -->
+      <div class="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+          <header class="px-5 py-4 border-b border-gray-100">
+              <div class="font-semibold text-gray-800">Vista de Productos</div>
+          </header>
+          <% if( items.length > 0 ){  %>
+          <div class="overflow-x-auto p-3">
+              <table class="table-auto w-full">
+                  <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                      <tr>
+                          <th class="p-2">
+                              <div class="font-semibold text-left">Nombre</div>
+                          </th>
+                          <th class="p-2">
+                              <div class="font-semibold text-left">Precio</div>
+                          </th>
+                          <th class="p-2">
+                              <div class="font-semibold text-left">Foto</div>
+                          </th>
+                          <th class="p-2">
+                              <div class="font-semibold text-center">Action</div>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody class="text-sm divide-y divide-gray-100">
+                      <!-- record 1 -->
+                      <% items.forEach(item => { %>      
+                      <tr>
+                          <td class="p-2">
+                              <div class="font-medium text-gray-800">
+                                <%= item.title %>
+                              </div>
+                          </td>
+                          <td class="p-2">
+                              <div class="text-left">
+                                <%= item.price %>                                
+                              </div>
+                          </td>
+                          <td class="p-2">
+                              <div class="text-left font-medium text-green-500">
+                                <img src="<%= item.thumbnail %>" class="img-thumbnail" alt="...">
+                              </div>
+                          </td>
+                          <td class="p-2">
+                              <div class="flex justify-center">
+                                  <button>
+                                    <a href="/productos/delete/<%= item.id %>">
+                                      <svg class="w-8 h-8 hover:text-blue-600 rounded-full hover:bg-gray-100 p-1"
+                                          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                          xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                          </path>
+                                      </svg>
+                                    </a>
+                                  </button>
+                              </div>
+                          </td>
+                      </tr>
+                      <% }); %>
+                  </tbody>
+              </table>
+          </div>
+          <% } else { %>
+            <div class="overflow-x-auto p-3">
+              <p class="font-thin">No se encontraron productos</p>
+            </div>            
+          <% } %>  
+          <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <a href="/">Registro</a>
+          </button>          
+      </div>
+  </div>
+  <div id="deleted" style="display: none;"><%= typeof isDeleted != 'undefined' ? isDeleted : '' %></div>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script>
+    const isDeleted = document.getElementById('deleted').innerHTML.toString()
+    if(isDeleted == 'deleted') {
+      Toastify({
+        text: "El producto se elimino satisfactoriamente",
+        offset: {
+          x: 50, 
+          y: 10 
+        },
+      }).showToast();
+    }  
+  </script>  
+</section>    
+
+</body>
+</html>
